@@ -1,6 +1,0 @@
-  This project is a mobile app developed with Android Studio and Kotlin. The objective of this project
-is to build an application that will simplify the process of cities/towns communicating with their
-citizens. It will allow city admins to create and verify a city page, which citizens can then
-subscribe to and receive notifications when alerts are pushed to said page. 
-  The intent of this project is to provide a free and easy way for citizens to be able to receive
-alerts from their city/town. 
