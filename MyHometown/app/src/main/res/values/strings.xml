@@ -6,4 +6,17 @@
     <string name="login">Login</string>
     <string name="please_login_below">Please Login below!</string>
     <string name="myhometown">MyHometown</string>
+    <string name="back4app_server_url">https://parseapi.back4app.com/</string>
+    <string name="back4app_app_id">7BITKTZjnkbgTa1qJBdDDqcs0niftbNG6r5vG7nf</string>
+    <string name="back4app_client_key">ZI7BhxZyesYFrTp8ZOuehTNMDer8dojZuy0v52aR</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_password_again">Password Again</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
 </resources>
