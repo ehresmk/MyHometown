@@ -1,17 +1,29 @@
-package com.app.MyHometown.ui.login;
+//---------------------------------------------------------------//
+//  Kevin Ehresman - MyHometown                                  //
+//                                                               //
+//  This Activity class deals with the retrieval of information  //
+//  from the user. It checks the text boxes for inputted data    //
+//  and attempts to log in the user to the Back4App system.      //
+//  If the login attempt fails an appropriate error message      //
+//  is displayed. The user can also click the "Create an         //
+//  Account" button which this class redirects to the Create     //
+//  Activity class.                                              //
+//---------------------------------------------------------------//
 
-import android.app.AlertDialog;
+package com.app.MyHometown.ui.login;
+import com.app.MyHometown.R;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.widget.Button;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 
-import com.app.MyHometown.R;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.LogInCallback;
@@ -22,8 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText passwordView;
 
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -33,47 +44,44 @@ public class LoginActivity extends AppCompatActivity {
         final Button login_button = findViewById(R.id.login);
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                boolean validation = false;
-                StringBuilder errorMsg = new StringBuilder("Please, insert");
+            public void onClick(View v) {
+                //Validating the log in data
+                boolean validationError = false;
 
-                if(isEmpty(usernameView))
-                {
-                    validation = true;
-                    errorMsg.append("an username");
+                StringBuilder validationErrorMessage = new StringBuilder("Please, insert ");
+                if (isEmpty(usernameView)) {
+                    validationError = true;
+                    validationErrorMessage.append("an username");
                 }
-                else if(isEmpty(passwordView))
-                {
-                    if(validation) {
-                        errorMsg.append(" and ");
+                if (isEmpty(passwordView)) {
+                    if (validationError) {
+                        validationErrorMessage.append(" and ");
                     }
-                    validation = true;
-                    errorMsg.append("a password");
+                    validationError = true;
+                    validationErrorMessage.append("a password");
                 }
-                errorMsg.append(".");
+                validationErrorMessage.append(".");
 
-                if(validation)
-                {
-                    Toast.makeText(LoginActivity.this, errorMsg.toString(), Toast.LENGTH_LONG).show();
+                if (validationError) {
+                    Toast.makeText(LoginActivity.this, validationErrorMessage.toString(), Toast.LENGTH_LONG).show();
                     return;
                 }
 
-                final ProgressDialog prog = new ProgressDialog(LoginActivity.this);
-                prog.setTitle("Just a moment.");
-                prog.setMessage("Logging in...");
-                prog.show();
+                //Setting up a progress dialog
+                final ProgressDialog dlg = new ProgressDialog(LoginActivity.this);
+                dlg.setTitle("Please, wait a moment.");
+                dlg.setMessage("Logging in...");
+                dlg.show();
 
                 ParseUser.logInInBackground(usernameView.getText().toString(), passwordView.getText().toString(), new LogInCallback() {
                     @Override
-                    public void done(ParseUser user, ParseException e) {
-                        if(user != null)
-                        {
-                            prog.dismiss();
-                            alertDisplayer("Successfully logged in!", "Welcome back!");
-                        }
-                        else
-                        {
-                            prog.dismiss();
+                    public void done(ParseUser parseUser, ParseException e) {
+                        if (parseUser != null) {
+                            dlg.dismiss();
+                            alertDisplayer("Successful Login","Welcome back " + usernameView.getText().toString() + "!");
+
+                        } else {
+                            dlg.dismiss();
                             ParseUser.logOut();
                             Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
                         }
@@ -82,34 +90,34 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        final Button create_button = findViewById(R.id.create);
-        create_button.setOnClickListener(new View.OnClickListener() {
+        final Button signup_button = findViewById(R.id.createNew);
+        signup_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, CreateActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });
     }
 
-    private boolean isEmpty(EditText text)
-    {
-        if(text.getText().toString().trim().length()>0)
+    private boolean isEmpty(EditText text) {
+        if (text.getText().toString().trim().length() > 0) {
             return false;
-        else
+        } else {
             return true;
+        }
     }
 
-    private void alertDisplayer(String title, String message)
-    {
+    private void alertDisplayer(String title,String message){
         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this)
-                .setTitle(title).setMessage(message)
+                .setTitle(title)
+                .setMessage(message)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
-                        Intent intent = new Intent(LoginActivity.this, LogoutActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     }

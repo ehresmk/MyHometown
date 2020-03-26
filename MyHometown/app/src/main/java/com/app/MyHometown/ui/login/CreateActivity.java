@@ -1,3 +1,15 @@
+//---------------------------------------------------------------//
+//  Kevin Ehresman - MyHometown                                  //
+//                                                               //
+//  This Activity class handles the creation of a new user       //
+//  account. It reads username and password data from the user   //
+//  and then signs up the user through the Back4App system.      //
+//  Once the user successfully signs up, this class logs them in //
+//  and transfers them to the MyHometown main screen. There is   //
+//  also a "Back" button that the user can click which will      //
+//  return them to the Login screen.                             //
+//---------------------------------------------------------------//
+
 package com.app.MyHometown.ui.login;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,7 +58,7 @@ public class CreateActivity extends AppCompatActivity {
         passwordView = (EditText) findViewById(R.id.password);
         passwordAgainView = (EditText) findViewById(R.id.PasswordAgain);
 
-        final Button signup_button = findViewById(R.id.create);
+        final Button signup_button = findViewById(R.id.createNew);
         signup_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,7 +113,7 @@ public class CreateActivity extends AppCompatActivity {
                     public void done(ParseException e) {
                         if (e == null) {
                             dlg.dismiss();
-                            alertDisplayer("Sucessful Login", "Welcome " + usernameView.getText().toString() + "!");
+                            alertDisplayer("Successful Login", "Welcome " + usernameView.getText().toString() + "!");
                         } else {
                             dlg.dismiss();
                             ParseUser.logOut();
@@ -116,7 +128,8 @@ public class CreateActivity extends AppCompatActivity {
     private boolean isEmpty(EditText text) {
         if (text.getText().toString().trim().length() > 0) {
             return false;
-        } else {
+        }
+        else {
             return true;
         }
     }
@@ -138,7 +151,7 @@ public class CreateActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
-                        Intent intent = new Intent(CreateActivity.this, LogoutActivity.class);
+                        Intent intent = new Intent(CreateActivity.this, MainActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     }
