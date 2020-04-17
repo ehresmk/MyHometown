@@ -6,7 +6,7 @@
 //  message/description of the Alert.                            //
 //---------------------------------------------------------------//
 
-package com.app.MyHometown;
+package com.app.MyHometown.assets;
 
 public class Alert<string>
 {

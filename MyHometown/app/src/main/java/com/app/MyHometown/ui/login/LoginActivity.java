@@ -45,7 +45,6 @@ public class LoginActivity extends AppCompatActivity {
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Validating the log in data
                 boolean validationError = false;
 
                 StringBuilder validationErrorMessage = new StringBuilder("Please, insert ");
@@ -67,7 +66,6 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-                //Setting up a progress dialog
                 final ProgressDialog dlg = new ProgressDialog(LoginActivity.this);
                 dlg.setTitle("Please, wait a moment.");
                 dlg.setMessage("Logging in...");
@@ -95,7 +93,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, CreateActivity.class);
-                //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
         });

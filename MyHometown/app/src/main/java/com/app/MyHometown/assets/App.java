@@ -1,6 +1,8 @@
-package com.app.MyHometown;
+package com.app.MyHometown.assets;
 
 import android.app.Application;
+
+import com.app.MyHometown.R;
 import com.parse.Parse;
 import com.parse.ParseInstallation;
 

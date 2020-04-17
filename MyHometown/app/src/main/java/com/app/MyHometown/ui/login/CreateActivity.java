@@ -45,7 +45,7 @@ public class CreateActivity extends AppCompatActivity {
             public void onClick(View v) {
                 final ProgressDialog dlg = new ProgressDialog(CreateActivity.this);
                 dlg.setTitle("Please, wait a moment.");
-                dlg.setMessage("Returning to the login section...");
+                dlg.setMessage("Returning to login...");
                 dlg.show();
                 Intent intent = new Intent(CreateActivity.this, LoginActivity.class);
                 dlg.dismiss();
@@ -55,7 +55,7 @@ public class CreateActivity extends AppCompatActivity {
         });
 
         usernameView = (EditText) findViewById(R.id.username);
-        passwordView = (EditText) findViewById(R.id.password);
+        passwordView = (EditText) findViewById(R.id.Password);
         passwordAgainView = (EditText) findViewById(R.id.PasswordAgain);
 
         final Button signup_button = findViewById(R.id.createNew);
@@ -102,7 +102,7 @@ public class CreateActivity extends AppCompatActivity {
                 //Setting up a progress dialog
                 final ProgressDialog dlg = new ProgressDialog(CreateActivity.this);
                 dlg.setTitle("Please, wait a moment.");
-                dlg.setMessage("Signing up...");
+                dlg.setMessage("Creating an account...");
                 dlg.show();
 
                 ParseUser user = new ParseUser();

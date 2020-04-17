@@ -19,4 +19,10 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="create_city_page">Create City Page</string>
+    <string name="logout">Logout</string>
+    <string name="enter_city_name">Enter City Name</string>
+    <string name="enter_state_name">Enter State Name</string>
+    <string name="create_a_new_city">Create a New City</string>
+    <string name="back">Back</string>
 </resources>

@@ -7,8 +7,7 @@
 //  that are posted to the City page.                            //
 //---------------------------------------------------------------//
 
-package com.app.MyHometown;
-import com.app.MyHometown.Alert;
+package com.app.MyHometown.assets;
 import java.util.ArrayList;
 import java.util.List;
 

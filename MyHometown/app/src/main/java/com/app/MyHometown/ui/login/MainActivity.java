@@ -29,6 +29,14 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final Button logout_button = findViewById(R.id.logout);
+        final Button city_button = findViewById(R.id.create_city);
+        boolean check = ParseUser.getCurrentUser().getBoolean("Admin");
+        if(check){
+            city_button.setVisibility(View.VISIBLE);
+        }
+        else{
+            city_button.setVisibility(View.INVISIBLE);
+        }
 
         logout_button.setOnClickListener(new View.OnClickListener() {
             @Override
