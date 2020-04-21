@@ -20,7 +20,9 @@ import android.view.View;
 import android.widget.Button;
 
 import com.app.MyHometown.R;
+import com.app.MyHometown.activities.CreateCity;
 import com.parse.ParseUser;
+
 
 public class MainActivity extends AppCompatActivity
 {
@@ -37,6 +39,15 @@ public class MainActivity extends AppCompatActivity
         else{
             city_button.setVisibility(View.INVISIBLE);
         }
+
+        city_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CreateCity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
 
         logout_button.setOnClickListener(new View.OnClickListener() {
             @Override
