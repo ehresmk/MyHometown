@@ -106,6 +106,8 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    //This method displays an alert with the given title and message on the current page
+    //and then switches to the main activity class when the user logs in
     private void alertDisplayer(String title,String message){
         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this)
                 .setTitle(title)

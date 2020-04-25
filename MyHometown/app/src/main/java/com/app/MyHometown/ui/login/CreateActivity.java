@@ -143,6 +143,8 @@ public class CreateActivity extends AppCompatActivity {
         }
     }
 
+    //This method displays an alert with the given title and message on the current page
+    //and then switches to the main activity class once the account has been created
     private void alertDisplayer(String title,String message){
         AlertDialog.Builder builder = new AlertDialog.Builder(CreateActivity.this)
                 .setTitle(title)

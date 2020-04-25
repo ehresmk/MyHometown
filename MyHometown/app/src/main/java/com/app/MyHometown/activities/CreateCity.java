@@ -26,9 +26,14 @@ import android.widget.Toast;
 
 import com.app.MyHometown.R;
 import com.app.MyHometown.ui.login.MainActivity;
+import com.parse.FindCallback;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.SaveCallback;
+
+import java.util.List;
 
 
 public class CreateCity extends AppCompatActivity {
@@ -55,6 +60,11 @@ public class CreateCity extends AppCompatActivity {
         city_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final ProgressDialog dlg = new ProgressDialog(CreateCity.this);
+                dlg.setTitle("New City page successfully created!");
+                dlg.setMessage("Please click OK to continue.");
+                dlg.show();
+
                 boolean valid = false;
                 StringBuilder validationErrorMessage = new StringBuilder("Please enter a valid ");
 
@@ -74,6 +84,47 @@ public class CreateCity extends AppCompatActivity {
                     Toast.makeText(CreateCity.this, validationErrorMessage.toString(), Toast.LENGTH_LONG).show();
                     return;
                 }
+
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("City");
+                query.whereEqualTo("cityName", city_name.getText().toString());
+                query.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> city, ParseException e) {
+                        if (e == null) {
+                            if (city.size() > 0) {
+                                dlg.dismiss();
+                                //Throw dialog, city already exists
+                                alertDisplayer("A city page for that city already exists.", "Please enter a different city.");
+                            }
+                            else {
+                                //Create new city object
+                                ParseObject new_city = new ParseObject("City");
+                                new_city.put("cityName", city_name.getText().toString());
+                                new_city.put("cityState", state_name.getText().toString());
+                                new_city.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        if (e == null) {
+                                            dlg.dismiss();
+                                            alertDisplayer("City page successfully created!", "Please click OK to continue.");
+                                            Intent intent = new Intent(CreateCity.this, MainActivity.class);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                            startActivity(intent);
+                                        }
+                                        else {
+                                            dlg.dismiss();
+                                            //Error
+                                            alertDisplayer("City page could not be created.", "Please try again.");
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                        else {
+                            //Throw exception: some unknown error
+                        }
+                    }
+                });
 
 
             }
@@ -97,5 +148,20 @@ public class CreateCity extends AppCompatActivity {
         else {
             return true;
         }
+    }
+
+    //This method displays an alert with the given title and message on the current page
+    private void alertDisplayer(String title,String message){
+        AlertDialog.Builder builder = new AlertDialog.Builder(CreateCity.this)
+                .setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        AlertDialog ok = builder.create();
+        ok.show();
     }
 }
