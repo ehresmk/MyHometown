@@ -6,6 +6,26 @@
         android:layout_height="match_parent"
         tools:context=".LoginActivity">
 
+    <Button
+            android:id="@+id/city2"
+            android:layout_width="match_parent"
+            android:layout_height="66dp"
+            app:layout_constraintBottom_toTopOf="@+id/city1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/appBarLayout"
+            app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+            android:id="@+id/city1"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            app:layout_constraintBottom_toTopOf="@+id/create_city"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.19" />
+
     <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
@@ -22,13 +42,12 @@
             android:id="@+id/logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:text="@string/logout"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/viewList"
-            app:layout_constraintVertical_bias="0.773" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     <Button
             android:id="@+id/create_city"
@@ -40,39 +59,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.986"
+            app:layout_constraintVertical_bias="0.972"
             tools:visibility="invisible" />
-
-    <ScrollView
-            android:id="@+id/viewList"
-            android:layout_width="414dp"
-            android:layout_height="497dp"
-            android:layout_marginTop="36dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/appBarLayout"
-            app:layout_constraintVertical_bias="0.116">
-
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" >
-
-            <Button
-                    android:id="@+id/city1"
-                    android:layout_width="match_parent"
-                    android:layout_height="72dp"
-                    android:text="Button" />
-
-            <Button
-                    android:id="@+id/city2"
-                    android:layout_width="match_parent"
-                    android:layout_height="66dp"
-                    android:text="Button" />
-
-        </LinearLayout>
-    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

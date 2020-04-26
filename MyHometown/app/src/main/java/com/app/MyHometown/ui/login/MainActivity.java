@@ -29,6 +29,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.List;
 
@@ -43,7 +44,6 @@ public class MainActivity extends AppCompatActivity
         final Button city_button = findViewById(R.id.create_city);
         final Button city1 = findViewById(R.id.city1);
         final Button city2 = findViewById(R.id.city2);
-        final ScrollView list = findViewById(R.id.viewList);
         boolean check = ParseUser.getCurrentUser().getBoolean("Admin");
 
         if(check){
@@ -133,14 +133,19 @@ public class MainActivity extends AppCompatActivity
                 if (e == null){
                     ParseObject obj = city.get(0);
                     obj.put("open", true);
+                    obj.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            Intent intent = new Intent(MainActivity.this, CityActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                        }
+                    });
                 }
                 else {
                     //Exception
                 }
             }
         });
-        Intent intent = new Intent(MainActivity.this, CityActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent);
     }
 }

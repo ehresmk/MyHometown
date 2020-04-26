@@ -20,13 +20,21 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class CityActivity extends AppCompatActivity {
 
     TextView cityName;
     TextView stateName;
+    Button sub;
+    ParseObject city;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,31 +43,78 @@ public class CityActivity extends AppCompatActivity {
         cityName = findViewById(R.id.City);
         stateName = findViewById(R.id.State);
         final Button back = findViewById(R.id.back);
+        sub = findViewById(R.id.subscribe);
         final Button alert = findViewById(R.id.CreateAlert);
         boolean check = ParseUser.getCurrentUser().getBoolean("Admin");
 
-        cityName.clearComposingText();
-        stateName.clearComposingText();
-
-        if(check){
+        if(check) {
+            sub.setVisibility(View.INVISIBLE);
             alert.setVisibility(View.VISIBLE);
         }
-        else{
+        else {
+            sub.setVisibility(View.VISIBLE);
             alert.setVisibility(View.INVISIBLE);
         }
 
         getCity();
+
+        sub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(checkSub()) {
+                    removeSub();
+                }
+                else {
+                    addSub();
+                }
+            }
+        });
+
+        alert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CityActivity.this, CreateAlert.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cityName.clearComposingText();
                 stateName.clearComposingText();
-                Intent intent = new Intent(CityActivity.this, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                city.put("open", false);
+                city.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        Intent intent = new Intent(CityActivity.this, MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+                });
             }
         });
+    }
+    private void removeSub() {
+        ParseUser.getCurrentUser().put("Subscribed", "");
+        ParseUser.getCurrentUser().saveInBackground();
+        sub.setText("Subscribe");
+    }
+
+    private void addSub() {
+        ParseUser.getCurrentUser().put("Subscribed", city.get("cityName"));
+        ParseUser.getCurrentUser().saveInBackground();
+        sub.setText("Unsubscribe");
+    }
+
+    private boolean checkSub() {
+        if(city.getString("cityName") == ParseUser.getCurrentUser().get("Subscribed")) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     private void getCity() {
@@ -69,16 +124,19 @@ public class CityActivity extends AppCompatActivity {
             public void done(List<ParseObject> cities, ParseException e) {
                 if (e == null) {
                     ParseObject obj = cities.get(0);
-                    if(obj.getBoolean("open")){
-                        cityName.setText(obj.getString("cityName"));
-                        stateName.setText(obj.getString("cityState"));
-                        obj.put("open", false);
+                    int i = 1;
+                    while(!obj.getBoolean("open")) {
+                        obj = cities.get(i);
+                        i++;
+                    }
+                    cityName.setText(obj.getString("cityName").trim());
+                    stateName.setText(obj.getString("cityState").trim());
+                    city = obj;
+                    if(checkSub()) {
+                        sub.setText("Unsubscribe");
                     }
                     else {
-                        obj = cities.get(1);
-                        cityName.setText(obj.getString("cityName"));
-                        stateName.setText(obj.getString("cityState"));
-                        obj.put("open", false);
+                        sub.setText("Subscribe");
                     }
                 }
                 else {
@@ -87,5 +145,4 @@ public class CityActivity extends AppCompatActivity {
             }
         });
     }
-
 }
