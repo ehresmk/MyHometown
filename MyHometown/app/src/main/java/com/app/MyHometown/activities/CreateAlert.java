@@ -1,7 +1,16 @@
+//---------------------------------------------------------------//
+//  Kevin Ehresman - MyHometown                                  //
+//                                                               //
+//  This Activity class deals with the creating of an alert,     //
+//  it takes in a title and a description and can only be        //
+//  accessed by an admin. Once an alert is successfully created  //
+//  the activity switches back to the city page and the new      //
+//  can be seen displayed in the list of alerts on that page     //
+//---------------------------------------------------------------//
+
 package com.app.MyHometown.activities;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,20 +18,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ScrollView;
-import android.widget.TextView;
-
 import com.app.MyHometown.R;
-import com.app.MyHometown.activities.CreateCity;
-import com.app.MyHometown.ui.login.MainActivity;
 import com.parse.FindCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 import com.parse.SaveCallback;
-
 import java.util.List;
 
 public class CreateAlert extends AppCompatActivity {
@@ -74,7 +75,8 @@ public class CreateAlert extends AppCompatActivity {
             }
         });
     }
-
+    //Gets the "open" city from the database by checking which cities'
+    //"open" variable is true.
     private void getCity() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("City");
         query.findInBackground(new FindCallback<ParseObject>() {

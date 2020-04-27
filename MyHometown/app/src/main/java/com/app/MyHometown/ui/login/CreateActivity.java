@@ -125,6 +125,7 @@ public class CreateActivity extends AppCompatActivity {
         });
     }
 
+    //This method checks if the passed text is empty and returns a boolean
     private boolean isEmpty(EditText text) {
         if (text.getText().toString().trim().length() > 0) {
             return false;
@@ -133,7 +134,7 @@ public class CreateActivity extends AppCompatActivity {
             return true;
         }
     }
-
+    //This method checks if the passed texts is are equal/matching to each other
     private boolean isMatching(EditText text1, EditText text2){
         if(text1.getText().toString().equals(text2.getText().toString())){
             return true;

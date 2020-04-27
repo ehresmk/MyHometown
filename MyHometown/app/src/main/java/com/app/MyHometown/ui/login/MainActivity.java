@@ -18,13 +18,10 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ScrollView;
-
 import com.app.MyHometown.R;
 import com.app.MyHometown.activities.CityActivity;
 import com.app.MyHometown.activities.CreateCity;
 import com.parse.FindCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -124,6 +121,9 @@ public class MainActivity extends AppCompatActivity
         ok.show();
     }
 
+    //This method gets the current city as determined by a button click
+    //on the main screen and sets the city's value for "open" to be true
+    //then it switches to the city page activity.
     private void getCity(String cityName) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("City");
         query.whereEqualTo("cityName", cityName);

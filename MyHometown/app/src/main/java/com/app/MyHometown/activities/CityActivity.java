@@ -1,32 +1,30 @@
+//---------------------------------------------------------------//
+//  Kevin Ehresman - MyHometown                                  //
+//                                                               //
+//  This Activity class is for the main city page. It is dynamic //
+//  in that it loads the specific page for the specific city     //
+//  that the user has clicked for. Admins will be able to click  //
+//  to create alerts and normal users will be able to click to   //
+//  subscribe. This page also displays all the previously        //
+//  created alerts which it retrieves from the database.         //
+//---------------------------------------------------------------//
+
 package com.app.MyHometown.activities;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ScrollView;
 import android.widget.TextView;
-
 import com.app.MyHometown.R;
-import com.app.MyHometown.activities.CreateCity;
 import com.app.MyHometown.ui.login.MainActivity;
 import com.parse.FindCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class CityActivity extends AppCompatActivity {
@@ -98,18 +96,20 @@ public class CityActivity extends AppCompatActivity {
             }
         });
     }
+    //Removes the current subscription from the current user by changing
+    //the "Subscribed" value to nothing.
     private void removeSub() {
         ParseUser.getCurrentUser().put("Subscribed", "");
         ParseUser.getCurrentUser().saveInBackground();
         sub.setText("Subscribe");
     }
-
+    //Sets the current users "Subscribed" value to the current city
     private void addSub() {
         ParseUser.getCurrentUser().put("Subscribed", city.get("cityName"));
         ParseUser.getCurrentUser().saveInBackground();
         sub.setText("Unsubscribe");
     }
-
+    //Checks the if the current user is subscribed to the opened city page
     private boolean checkSub() {
         if(city.getString("cityName") == ParseUser.getCurrentUser().get("Subscribed")) {
             return true;
@@ -118,7 +118,9 @@ public class CityActivity extends AppCompatActivity {
             return false;
         }
     }
-
+    //Retrieves a list of all the alerts in the database and adds them
+    //to the page based on whether or not their "City" value is equal
+    //to the current city page that is open.
     private void getAlerts() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Alert");
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -139,7 +141,9 @@ public class CityActivity extends AppCompatActivity {
             }
         });
     }
-
+    //Gets the "open" city from the database by checking which cities'
+    //"open" variable is true. It then sets the text on the page based
+    //on that finding.
     private void getCity() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("City");
         query.findInBackground(new FindCallback<ParseObject>() {

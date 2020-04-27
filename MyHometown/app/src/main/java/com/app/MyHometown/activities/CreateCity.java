@@ -1,7 +1,7 @@
 //---------------------------------------------------------------//
 //  Kevin Ehresman - MyHometown                                  //
 //                                                               //
-//  This Activity class deals with the create a city page and    //
+//  This Activity class deals with the creating a city page and  //
 //  appropriately creates a city object in the database if one   //
 //  for the required city does not exist. This class does do     //
 //  input validation for the city to ensure the database's       //
@@ -11,28 +11,22 @@
 package com.app.MyHometown.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.app.MyHometown.R;
 import com.app.MyHometown.ui.login.MainActivity;
 import com.parse.FindCallback;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.SaveCallback;
-
 import java.util.List;
 
 
@@ -130,7 +124,7 @@ public class CreateCity extends AppCompatActivity {
             }
         });
     }
-
+    //This method checks if the passed text is empty and returns a boolean
     private boolean isEmpty(EditText text) {
         if (text.getText().toString().trim().length() > 0) {
             return false;
@@ -139,7 +133,8 @@ public class CreateCity extends AppCompatActivity {
             return true;
         }
     }
-
+    //This method checks if the passed text is too long (specifically for
+    //city and state names to ensure security from injection)
     private boolean isLong(EditText text) {
         //The longest city name in the world is 26 letters in New Zealand
         if (text.getText().toString().trim().length() < 26) {

@@ -97,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
+    //This method checks if the passed text is empty and returns a boolean
     private boolean isEmpty(EditText text) {
         if (text.getText().toString().trim().length() > 0) {
             return false;
