@@ -38,6 +38,8 @@ public class CreateAlert extends AppCompatActivity {
         final EditText title = findViewById(R.id.Title);
         final EditText description = findViewById(R.id.Description);
 
+        getCity();
+
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,7 +55,7 @@ public class CreateAlert extends AppCompatActivity {
                 ParseObject new_alert = new ParseObject("Alert");
                 new_alert.put("Title", title.getText().toString());
                 new_alert.put("Description", description.getText().toString());
-                new_alert.put("City", city);
+                new_alert.put("City", city.get("cityName"));
                 new_alert.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {

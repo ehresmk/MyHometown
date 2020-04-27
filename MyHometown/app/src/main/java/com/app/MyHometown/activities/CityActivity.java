@@ -33,6 +33,7 @@ public class CityActivity extends AppCompatActivity {
 
     TextView cityName;
     TextView stateName;
+    TextView list;
     Button sub;
     ParseObject city;
 
@@ -42,6 +43,7 @@ public class CityActivity extends AppCompatActivity {
         setContentView(R.layout.activity_city);
         cityName = findViewById(R.id.City);
         stateName = findViewById(R.id.State);
+        list = findViewById(R.id.alerts);
         final Button back = findViewById(R.id.back);
         sub = findViewById(R.id.subscribe);
         final Button alert = findViewById(R.id.CreateAlert);
@@ -117,6 +119,27 @@ public class CityActivity extends AppCompatActivity {
         }
     }
 
+    private void getAlerts() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Alert");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> alerts, ParseException e) {
+                if (e == null) {
+                    for (int i = 0; i < alerts.size(); i++) {
+                        if(alerts.get(i).getString("City").equals(city.getString("cityName"))) {
+                            StringBuilder alert = new StringBuilder("-" + alerts.get(i).getString("Title"));
+                            alert.append("\n" + " "+ alerts.get(i).getString("Description") + "\n\n");
+                            list.append(alert);
+                        }
+                    }
+                }
+                else {
+                    //Exception
+                }
+            }
+        });
+    }
+
     private void getCity() {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("City");
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -132,6 +155,7 @@ public class CityActivity extends AppCompatActivity {
                     cityName.setText(obj.getString("cityName").trim());
                     stateName.setText(obj.getString("cityState").trim());
                     city = obj;
+                    getAlerts();
                     if(checkSub()) {
                         sub.setText("Unsubscribe");
                     }
