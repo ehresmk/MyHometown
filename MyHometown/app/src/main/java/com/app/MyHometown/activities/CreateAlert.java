@@ -18,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import com.app.MyHometown.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -53,6 +55,28 @@ public class CreateAlert extends AppCompatActivity {
         create_alert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                boolean valid = false;
+                StringBuilder validationErrorMessage = new StringBuilder("Please enter a valid ");
+
+                if (isEmpty(title)) {
+                    valid = true;
+                    validationErrorMessage.append("title");
+                }
+                if (isEmpty(description)) {
+                    if(valid) {
+                        validationErrorMessage.append(" and description.");
+                    }
+                    else {
+                        valid = true;
+                        validationErrorMessage.append("description.");
+                    }
+                }
+
+                if (valid) {
+                    Toast.makeText(CreateAlert.this, validationErrorMessage.toString(), Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 ParseObject new_alert = new ParseObject("Alert");
                 new_alert.put("Title", title.getText().toString());
                 new_alert.put("Description", description.getText().toString());
@@ -74,6 +98,15 @@ public class CreateAlert extends AppCompatActivity {
                 });
             }
         });
+    }
+    //This method checks if the passed text is empty and returns a boolean
+    private boolean isEmpty(EditText text) {
+        if (text.getText().toString().trim().length() > 0) {
+            return false;
+        }
+        else {
+            return true;
+        }
     }
     //Gets the "open" city from the database by checking which cities'
     //"open" variable is true.

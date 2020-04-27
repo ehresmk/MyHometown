@@ -70,8 +70,10 @@ public class CreateCity extends AppCompatActivity {
                     if(valid) {
                         validationErrorMessage.append(" and state name.");
                     }
-                    valid = true;
-                    validationErrorMessage.append("state name.");
+                    else {
+                        valid = true;
+                        validationErrorMessage.append("state name.");
+                    }
                 }
 
                 if (valid) {
